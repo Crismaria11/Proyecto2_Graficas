@@ -11,7 +11,7 @@ class Material(object):
 cuerpo1 = Material(diffuse=color(255, 255, 255), albedo=(0.6, 0.3, 0.1, 0), spec=5)
 cuerpo2 = Material(diffuse=color(194, 155, 97), albedo=(0.6, 0.3, 0.1, 0), spec=5)
 
-navidad1 = Material(diffuse=color(244, 244, 244), albedo=(0.6, 0.3, 0.1, 0), spec=5)
+navidad1 = Material(diffuse=color(244, 244, 244), albedo=(1, 1, 0.1, 0), spec=50)
 navidad2 = Material(diffuse=color(255, 0, 0), albedo=(0.6, 0.3, 0.1, 0), spec=5)
 
 

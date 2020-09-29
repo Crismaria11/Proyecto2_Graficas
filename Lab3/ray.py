@@ -15,7 +15,7 @@ class Raycaster(object):
   def __init__(self, width, height):
     self.width = width
     self.height = height
-    self.background_color = BACKGROUND
+    self.background_color = BLACK
     self.scene = []
     self.glClear()
 
@@ -134,48 +134,59 @@ class Raycaster(object):
         i =  (2 * (x + 0.5)/self.width - 1) * tan(fov/2) * self.width/self.height
         j =  (2 * (y + 0.5)/self.height - 1) * tan(fov/2)
         direction = norm(V3(i, j, -1))
-        self.pixels[y][x] = self.cast_ray(V3(0,0,0), direction)
+        # self.pixels[y][x] = self.cast_ray(V3(0,0,0), direction)
+
+        # con este sale el efecto de luz roja
+        ver_rojo = self.cast_ray(V3(0.3, 0, 0), direction)
+        luz_roja = (ver_rojo * 0.5 + color(100, 0, 0)) if ver_rojo != self.background_color else ver_rojo
+
+        # con este sale el efecto de luz azul
+        ver_azul = self.cast_ray(V3(-0.3, 0, 0), direction)
+        luz_azul = (ver_azul * 0.5 + color(0, 0, 100)) if ver_azul != self.background_color else ver_azul
+
+        luz_total = luz_roja + luz_azul
+        self.pixels[y][x] = luz_total
 
 r = Raycaster(2000, 2000)
 
 r.light = Light(
-  position=V3(0, 0, 20),
+  position=V3(40, 20, 20),
   intensity=1.5
 )
 
 r.scene = [
   # esfera de navidad
-  Sphere(V3(-2.5, -1, -10), 2, navidad1),
-  Sphere(V3(2.5, -1, -10), 2, navidad2),
-  # cabeza
-  Sphere(V3(-2.5, 2, -10), 1.5, cuerpo1),
-  Sphere(V3(2.5, 2, -10), 1.5, cuerpo2),
-  # orejas
-  Sphere(V3(-3.5, 3.5, -10), 0.6, cuerpo1),
-  Sphere(V3(-1.5, 3.5, -10), 0.6, cuerpo1),
-  Sphere(V3(3.5, 3.5, -10), 0.6, cuerpo2),
-  Sphere(V3(1.5, 3.5, -10), 0.6, cuerpo2),
-  # brazos
-  Sphere(V3(-3.5, 0, -8), 0.6, cuerpo1),
-  Sphere(V3(3.5, 0, -8), 0.6, cuerpo2),
-  Sphere(V3(-1, 0, -8), 0.6, cuerpo1),
+  # Sphere(V3(-2.5, -1, -10), 2, navidad1),
+  Sphere(V3(0, -1, -10), 2, navidad2),
+  # # cabeza
+  # Sphere(V3(-2.5, 2, -10), 1.5, cuerpo1),
+  Sphere(V3(0, 2, -10), 1.5, cuerpo2),
+  # # orejas
+  # Sphere(V3(-3.5, 3.5, -10), 0.6, cuerpo1),
+  # Sphere(V3(-1.5, 3.5, -10), 0.6, cuerpo1),
+  Sphere(V3(1, 3.5, -10), 0.6, cuerpo2),
+  Sphere(V3(-1, 3.5, -10), 0.6, cuerpo2),
+  # # brazos
+  # Sphere(V3(-3.5, 0, -8), 0.6, cuerpo1),
   Sphere(V3(1, 0, -8), 0.6, cuerpo2),
-  # piernas
-  Sphere(V3(-3.5, -2, -8), 0.6, cuerpo1),
-  Sphere(V3(3.5, -2, -8), 0.6, cuerpo2),
-  Sphere(V3(-1, -2, -8), 0.6, cuerpo1),
+  # Sphere(V3(-1, 0, -8), 0.6, cuerpo1),
+  Sphere(V3(-1.5, 0, -8), 0.6, cuerpo2),
+  # # piernas
+  # Sphere(V3(-3.5, -2, -8), 0.6, cuerpo1),
   Sphere(V3(1, -2, -8), 0.6, cuerpo2),
-  # nariz
-  Sphere(V3(-2.5, 1.5, -8.5), 0.6, cuerpo1),
-  Sphere(V3(2.5, 1.5, -8.5), 0.6, cuerpo2),
-  # punta nariz
-  Sphere(V3(-2.3, 1.25, -7.5), 0.1, negro),
-  Sphere(V3(2.3, 1.25, -7.5), 0.1, negro),
-  # ojos
-  Sphere(V3(-3, 2.4, -8.5), 0.2, negro),
-  Sphere(V3(-2, 2.4, -8.5), 0.2, negro),
-  Sphere(V3(3, 2.4, -8.5), 0.2, negro),
-  Sphere(V3(2, 2.4, -8.5), 0.2, negro),
+  # Sphere(V3(-1, -2, -8), 0.6, cuerpo1),
+  Sphere(V3(-1.5, -2, -8), 0.6, cuerpo2),
+  # # nariz
+  # Sphere(V3(-2.5, 1.5, -8.5), 0.6, cuerpo1),
+  Sphere(V3(0, 1.5, -8.5), 0.6, cuerpo2),
+  # # punta nariz
+  # Sphere(V3(-2.3, 1.25, -7.5), 0.1, negro),
+  Sphere(V3(-0.7, 1.25, -7.5), 0.1, negro),
+  # # ojos
+  # Sphere(V3(-3, 2.4, -8.5), 0.2, negro),
+  # Sphere(V3(-2, 2.4, -8.5), 0.2, negro),
+  Sphere(V3(0.5, 2.4, -8.5), 0.2, negro),
+  Sphere(V3(-0.5, 2.4, -8.5), 0.2, negro),
 
 ]
 # r.scene = [
